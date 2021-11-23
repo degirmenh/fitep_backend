@@ -4,7 +4,7 @@ from autoslug import AutoSlugField
 
 class Branch(models.Model):
     name = models.CharField(max_length=255)
-    slug = 
+    slug = AutoSlugField(populate_from='name', unique=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):

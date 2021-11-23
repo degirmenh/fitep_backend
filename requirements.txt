@@ -1,2 +1,4 @@
 Pillow==8.4.0
 django-autoslug==1.9.8
+django-countries==7.2.1
+django-cities==0.6
