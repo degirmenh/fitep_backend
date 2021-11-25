@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'account',
     'branch',
     'course',
-    'core',
+    'cities'
 
 ]
 
@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'fitep.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'fitep',
+        'USER': 'postgres',
+        'PASSWORD': 'hedede',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -130,4 +134,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
+GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
+
+
 AUTH_USER_MODEL = 'account.Account'
+
+# CITIES_COUNTRY_MODEL = 'core.CustomCountry'

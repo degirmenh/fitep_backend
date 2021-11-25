@@ -32,6 +32,9 @@ class Coach(models.Model):
         verbose_name = 'Coach'
         verbose_name_plural = 'Coachs'
 
+    def __str__(self) -> str:
+        return f'{self.account.username}   {self.account.first_name}  {self.account.last_name}'
+
 
 class Member(models.Model):
     account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
@@ -41,4 +44,6 @@ class Member(models.Model):
         verbose_name = 'Member'
         verbose_name_plural = 'Members'
 
+    def __str__(self) -> str:
+        return f'{self.account.username}   {self.account.first_name}  {self.account.last_name}'
 
