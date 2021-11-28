@@ -15,8 +15,10 @@ class CoachAdmin(admin.ModelAdmin):
     model = Coach
 
 
+
 class MemberAdmin(admin.ModelAdmin):
     model = Member
+
 
 
 admin.site.register(Account, AccountAdmin)

@@ -47,3 +47,5 @@ class Member(models.Model):
     def __str__(self) -> str:
         return f'{self.account.username}   {self.account.first_name}  {self.account.last_name}'
 
+
+
