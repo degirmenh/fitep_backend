@@ -1,7 +1,6 @@
 Descriptions
 ===============
-This app goals find support coachs
-
+This application aims to bring together coaches and people who want to receive coaching services in certain branches, especially sports.
 
 Installation
 ===============
