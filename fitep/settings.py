@@ -141,5 +141,3 @@ GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
 
 
 AUTH_USER_MODEL = 'account.Account'
-
-# CITIES_COUNTRY_MODEL = 'core.CustomCountry'
