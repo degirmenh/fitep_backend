@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-
 class Account(AbstractUser):
     ACCOUNT_TYPE_CHOICES = ((1, 'member'), (2, 'coach'), (3, 'admin'))
 
@@ -20,7 +19,7 @@ class Account(AbstractUser):
         verbose_name_plural = 'Accounts'
 
     def __repr__(self) -> str:
-        return f'{self.name} {self.last_name}' 
+        return f'{self.first_name} {self.last_name}' 
 
 
 
