@@ -1,5 +1,5 @@
-from account.api.serializers import ChangePasswordSerializer
-from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, get_object_or_404
+from account.api.serializers import ChangePasswordSerializer, RegisterSerializer
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, get_object_or_404, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -73,3 +73,11 @@ class UpdatePassword(APIView):
             self.object.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+
+# Create Account
+class CreateAccountView(CreateAPIView):
+    
+    model = Account.objects.all()
+    serializer_class = RegisterSerializer
+

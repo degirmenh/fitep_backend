@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from branch.models import Branch
+
+
 
 class Account(AbstractUser):
     ACCOUNT_TYPE_CHOICES = ((1, 'member'), (2, 'coach'), (3, 'admin'))
@@ -26,6 +29,8 @@ class Account(AbstractUser):
 class Coach(models.Model):
     
     account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
+    branches = models.ManyToManyField(Branch)
+    
     class Meta:
         db_table = 'coach'
         verbose_name = 'Coach'
