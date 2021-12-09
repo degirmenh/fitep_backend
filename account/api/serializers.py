@@ -3,6 +3,7 @@ import datetime
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from account.models import Account, Coach, Member
+from account.helpers import AccountType
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -78,6 +79,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         account.set_password(validated_data['password'])
         account.save()
+
+        if validate_password['account_type'] == AccountType.COACH:
+            pass
+        elif validate_password['account_type'] == AccountType.MEMBER:
+            pass
         return account
     
 

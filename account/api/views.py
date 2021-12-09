@@ -81,3 +81,4 @@ class CreateAccountView(CreateAPIView):
     model = Account.objects.all()
     serializer_class = RegisterSerializer
 
+

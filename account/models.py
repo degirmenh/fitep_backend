@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from branch.models import Branch
-
+from account.helpers import AccountType
 
 
 class Account(AbstractUser):
-    ACCOUNT_TYPE_CHOICES = ((1, 'member'), (2, 'coach'), (3, 'admin'))
+    ACCOUNT_TYPE_CHOICES = ((AccountType.MEMBER, 'member'), (AccountType.COACH, 'coach'), (AccountType.ADMIN, 'admin'))
 
     mobile_phone = models.CharField(max_length=25)
     birth_date = models.DateField(blank=True, null=True)
@@ -23,6 +23,12 @@ class Account(AbstractUser):
 
     def __repr__(self) -> str:
         return f'{self.first_name} {self.last_name}' 
+    
+    def full_name(self) -> str:
+        return f'{self.first_name} {self.last_name}'
+
+    def __str__(self) -> str:
+        return f'{self.full_name()}'
 
 
 
@@ -37,7 +43,8 @@ class Coach(models.Model):
         verbose_name_plural = 'Coachs'
 
     def __str__(self) -> str:
-        return f'{self.account.username}   {self.account.first_name}  {self.account.last_name}'
+        return super().__str__()
+
 
 
 class Member(models.Model):
@@ -49,7 +56,6 @@ class Member(models.Model):
         verbose_name_plural = 'Members'
 
     def __str__(self) -> str:
-        return f'{self.account.username}   {self.account.first_name}  {self.account.last_name}'
-
+        return super().__str__()
 
 

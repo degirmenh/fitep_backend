@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'branch',
     'course',
     'cities',
-    'address'
+    'address',
+    'package',
 
 ]
 
