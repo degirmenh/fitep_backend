@@ -10,6 +10,7 @@ from package.models import PackageType, Package
 class PackageTypesListView(ListAPIView):
     queryset = PackageType.objects.filter(is_active=True).all()
     serializer_class = PackageTypeSerializer
+    
 
 
 class PackageListView(ListAPIView):

@@ -77,7 +77,6 @@ class UpdatePassword(APIView):
 
 # Create Account
 class CreateAccountView(CreateAPIView):
-    
     model = Account.objects.all()
     serializer_class = RegisterSerializer
 
