@@ -8,3 +8,4 @@ class BranchAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Branch, BranchAdmin)
+admin.site.register(Category)
