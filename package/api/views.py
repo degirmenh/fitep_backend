@@ -1,8 +1,8 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
 
 
-from package.api.serializers import PackageTypeSerializer, PackageSerializer
+from package.api.serializers import PackageTypeSerializer, PackageSerializer, PackageCreateSerializer
 from package.models import PackageType, Package
 
 
@@ -28,3 +28,8 @@ class PackageListView(ListAPIView):
             queryset = Package.objects.filter(is_active=True).all()
         return queryset
     
+
+
+class PackageCreateView(CreateAPIView):
+    model = Package.objects.all()
+    serializer_class = PackageCreateSerializer

@@ -29,7 +29,7 @@ class PackageType(models.Model):
 
 class Package(models.Model):
     branch = models.ForeignKey(Branch, on_delete=CASCADE, related_name='branch')
-    coach = models.ForeignKey(Coach, on_delete=CASCADE, related_name='coach')
+    coach = models.ForeignKey(Coach, on_delete=CASCADE, related_name='coach', blank=True)
     package_type = models.ForeignKey(PackageType, on_delete=CASCADE, related_name='package_type')
     is_active = models.BooleanField(default=True)
 

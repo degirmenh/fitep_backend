@@ -92,16 +92,20 @@ class ProfilePhotoAPIView(APIView):
 
     def put(self, request, *args, **kwargs):
         self.object = self.get_object()
-        print('=====')
-        print(request.FILES.get('profile_photo'))
         data = {'profile_photo': request.FILES.get('profile_photo')}
-        print(data)
         serializer = ProfilePhotoUpdateSerializer(data=data)
         if serializer.is_valid():
-            print('111111')
             self.object.profile_photo = request.FILES.get('profile_photo')
             self.object.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not self.object:
+            return Response("User can not found", status = status.HTTP_404_NOT_FOUND)
+        data = {'profile_photo': self.object.profile_photo.url}
+        return Response(data)
 
 
