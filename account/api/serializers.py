@@ -32,7 +32,8 @@ class AccountSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Account
-        fields = ['pk', 'username', 'first_name', 'last_name', 'birth_date', 'account_type']
+        fields = ['pk', 'username', 'first_name', 'last_name', 'birth_date', 'account_type',\
+            'description', 'school_name', 'education_status', 'gender', 'identity_number', 'mobile_phone']
 
     def update(self, instance, validated_data):
         return super(AccountSerializer, self).update(instance, validated_data)
@@ -79,7 +80,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'password', 'first_name', 'last_name', 'email', 'account_type', \
-            'identity_number', 'profile_photo', 'mobile_phone', 'birth_date']
+            'identity_number', 'profile_photo', 'mobile_phone', 'birth_date', 'gender', 'description',\
+                'education_status', 'school_name']
 
     def validate(self, attr):
         validate_password(attr['password'])
@@ -109,7 +111,11 @@ class RegisterSerializer(serializers.ModelSerializer):
             profile_photo=validated_data.get('profile_photo'),
             birth_date=validated_data['birth_date'],
             mobile_phone=validated_data['mobile_phone'],
-            date_joined=datetime.datetime.now()
+            date_joined=datetime.datetime.now(),
+            gender=validated_data['gender'],
+            description=validated_data['description'],
+            education_status=validated_data['education_status'],
+            school_name=validated_data['school_name']
         )
         account.set_password(validated_data['password'])
         account.save()

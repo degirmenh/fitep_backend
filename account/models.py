@@ -3,17 +3,28 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.fields import CharField
 
 from branch.models import Branch
-from account.enums import AccountType
+from account.enums import AccountType, GenderType, EducationStatus
 
 
 class Account(AbstractUser):
     ACCOUNT_TYPE_CHOICES = ((AccountType.MEMBER, 'member'), (AccountType.COACH, 'coach'), (AccountType.ADMIN, 'admin'))
+    GENDER_TYPE_CHOICES = ((GenderType.FEMALE, 'female'), (GenderType.MALE, 'male'))
+    EDUCATION_TYPE_CHOICE = ((EducationStatus.PRIMARY, 'Primary'), (EducationStatus.SECONDARY, 'Secondary'), \
+        (EducationStatus.HIGH, 'High'), (EducationStatus.COLLEGE, 'College'), (EducationStatus.SPORT_ACADEMY, 'Sport Academy'), \
+            (EducationStatus.BACHELOR, 'Bachelor'), (EducationStatus.MASTER, 'Master'),(EducationStatus.DOCTORATE, 'Doctorate'))
+
     mobile_phone = models.CharField(max_length=25)
     email = models.EmailField(blank=True, unique=True)
     birth_date = models.DateField(blank=True, null=True)
     profile_photo = models.ImageField(upload_to='avatar/', blank=True, null=True)
     identity_number = models.CharField(max_length=25)
-    account_type = models.PositiveSmallIntegerField()
+    account_type = models.PositiveSmallIntegerField(choices=ACCOUNT_TYPE_CHOICES)
+    gender = models.PositiveSmallIntegerField(choices=GENDER_TYPE_CHOICES)
+    description = models.TextField(null=True, blank=True)
+    education_status = models.PositiveSmallIntegerField(choices=EDUCATION_TYPE_CHOICE, null=False, blank=False)
+
+    school_name = models.CharField(max_length=255, null=True, blank=True)
+
 
 
 
