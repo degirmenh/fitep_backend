@@ -148,3 +148,4 @@ GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'
 
 
 AUTH_USER_MODEL = 'account.Account'
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240

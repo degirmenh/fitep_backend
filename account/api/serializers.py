@@ -1,6 +1,7 @@
 import datetime
 
 from django.core.validators import ip_address_validator_map, validate_email
+from django.db.models.fields import CharField
 
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
@@ -35,9 +36,21 @@ class AccountSerializer(serializers.ModelSerializer):
         fields = ['pk', 'username', 'first_name', 'last_name', 'birth_date', 'account_type',\
             'description', 'school_name', 'education_status', 'gender', 'identity_number', 'mobile_phone']
 
-    def update(self, instance, validated_data):
-        return super(AccountSerializer, self).update(instance, validated_data)
 
+class AccountUpdateSerializer(serializers.Serializer):
+    first_name = serializers.CharField(max_length=255, allow_blank=True)
+    last_name = serializers.CharField(max_length=255, allow_blank=True)
+    birth_date = serializers.DateField()
+    description = serializers.CharField(allow_blank=True)
+
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
+        instance.description = validated_data.get('description', instance.description)
+        instance.save()
+        return instance
 
 
 class CoachSerializer(serializers.ModelSerializer):
@@ -47,12 +60,20 @@ class CoachSerializer(serializers.ModelSerializer):
         model = Coach
         fields = ['account', 'courses']
 
+
+class CoachUpdateSerializer(serializers.ModelSerializer):
+    account = AccountUpdateSerializer(many=False)
+
+    class Meta:
+        model = Coach
+        fields = ['account', 'courses']
+
     def update(self, instance, validated_data):
         account = validated_data.pop('account')
-        account_serializer = AccountSerializer(instance = instance.account, data=account)
+        account_serializer = AccountUpdateSerializer(instance = instance.account, data=account)
         account_serializer.is_valid(raise_exception=True)
         account_serializer.save()
-        return super(CoachSerializer, self).update(instance, validated_data)
+        return super(CoachUpdateSerializer, self).update(instance, validated_data)
 
 
 
@@ -129,3 +150,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 
+
+class ProfilePhotoUpdateSerializer(serializers.Serializer):
+    profile_photo = serializers.ImageField(required=True)
+
+    def update(self, instance, validated_data):
+        instance.profile_photo = validated_data.get('profile_photo', instance.profile_photo)
+        instance.save()

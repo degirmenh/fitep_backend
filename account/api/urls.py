@@ -3,7 +3,7 @@ from django.urls import path
 from account.api.views import AccountListAPIView, CoachListApiView, MemberListApiView
 from account.api.views import AccountUpdateAPIView, CoachUpdateAPIView
 from account.api.views import UpdatePassword
-from account.api.views import CreateAccountView
+from account.api.views import CreateAccountView, ProfilePhotoAPIView
 
 
 urlpatterns = [
@@ -14,5 +14,6 @@ urlpatterns = [
     path('coach/me', CoachUpdateAPIView.as_view(), name='coach-update'),
     path('update_password', UpdatePassword.as_view(), name='update-password'),
     path('register', CreateAccountView.as_view(), name='register'),
+    path('profile-photo', ProfilePhotoAPIView.as_view(), name='profile-photo'),
 ]
 

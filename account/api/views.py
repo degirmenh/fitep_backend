@@ -1,4 +1,4 @@
-from account.api.serializers import ChangePasswordSerializer, RegisterSerializer
+from account.api.serializers import ChangePasswordSerializer, RegisterSerializer, ProfilePhotoUpdateSerializer
 from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, get_object_or_404, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 
 
 from account.models import Account, Coach, Member
-from account.api.serializers import AccountSerializer, CoachSerializer, MemberSerializer
+from account.api.serializers import AccountSerializer, CoachSerializer, MemberSerializer, AccountUpdateSerializer, \
+    CoachUpdateSerializer
 
 
 class AccountListAPIView(ListAPIView):
@@ -28,7 +29,7 @@ class MemberListApiView(ListAPIView):
 
 class AccountUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = AccountSerializer
+    serializer_class = AccountUpdateSerializer
     queryset = Account.objects.all()
 
     def get_object(self):
@@ -42,7 +43,7 @@ class AccountUpdateAPIView(RetrieveUpdateAPIView):
 
 class CoachUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
-    serializer_class = CoachSerializer
+    serializer_class = CoachUpdateSerializer
     queryset = Coach.objects.all()
 
     def get_object(self):
@@ -79,5 +80,28 @@ class UpdatePassword(APIView):
 class CreateAccountView(CreateAPIView):
     model = Account.objects.all()
     serializer_class = RegisterSerializer
+
+
+# Profile Photo
+
+class ProfilePhotoAPIView(APIView):
+    permission_class = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
+
+    def put(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        print('=====')
+        print(request.FILES.get('profile_photo'))
+        data = {'profile_photo': request.FILES.get('profile_photo')}
+        print(data)
+        serializer = ProfilePhotoUpdateSerializer(data=data)
+        if serializer.is_valid():
+            print('111111')
+            self.object.profile_photo = request.FILES.get('profile_photo')
+            self.object.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
