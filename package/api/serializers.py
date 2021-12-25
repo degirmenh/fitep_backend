@@ -3,7 +3,7 @@ from rest_framework import serializers
 import branch
 
 
-from package.models import PackageType, Package
+from package.models import PackageType, Package, CURRENCY_TYPES
 from account.api.serializers import CoachSerializer
 from branch.api.serializers import BranchSerializer
 
@@ -41,3 +41,22 @@ class PackageCreateSerializer(serializers.ModelSerializer):
         )
         package.save()
         return package
+
+
+class PackageUpdateSerializer(serializers.Serializer):
+    branch_id = serializers.IntegerField()
+    price = serializers.FloatField()
+    currency = serializers.ChoiceField(choices=CURRENCY_TYPES, allow_blank=True)
+    description = serializers.CharField(allow_blank=True)
+    package_type_id = serializers.IntegerField()
+    user_count = serializers.IntegerField()
+    
+    def update(self, instance, validated_data):
+        instance.branch_id = validated_data.get('branch_id', instance.branch_id)
+        instance.price = validated_data.get('price', instance.price)
+        instance.currency = validated_data.get('currency', instance.currency)
+        instance.description = validated_data.get('description', instance.description)
+        instance.package_type_id = validated_data.get('package_type_id', instance.package_type_id)
+        instance.user_count = validated_data.get('user_count', instance.user_count)
+        instance.save()
+        return instance
