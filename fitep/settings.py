@@ -1,1 +1,1 @@
-from fitep.fitep.settings_local import *
+from fitep.settings_local import *
