@@ -26,7 +26,7 @@ SECRET_KEY = '&_!f$5c8vcj^tkkjqh9s%&zi%$c0zcr4&4ae^zm1$5ov^znx+d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["167.99.244.152"]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     'account',
     'branch',
     'course',
-    'cities',
-    'address',
     'package',
 
 ]
@@ -90,11 +88,11 @@ WSGI_APPLICATION = 'fitep.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgres',
-        'USER': 'postgres',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'fitep',
+        'USER': 'fitep_dbadmin',
         'PASSWORD': 'hededede',
-        'HOST': 'database-1.codsvqpsguax.eu-central-1.rds.amazonaws.com',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -137,8 +135,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 

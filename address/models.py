@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.db.models.deletion import CASCADE
 
-from django.contrib.gis.db import models as gmodels
+# from django.contrib.gis.db import models as gmodels
 
 from cities.models import Country, Region, City
 from account.models import Account

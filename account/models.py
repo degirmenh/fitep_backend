@@ -18,10 +18,10 @@ class Account(AbstractUser):
     birth_date = models.DateField(blank=True, null=True)
     profile_photo = models.ImageField(upload_to='avatar/', blank=True, null=True)
     identity_number = models.CharField(max_length=25)
-    account_type = models.PositiveSmallIntegerField(choices=ACCOUNT_TYPE_CHOICES)
-    gender = models.PositiveSmallIntegerField(choices=GENDER_TYPE_CHOICES)
+    account_type = models.PositiveSmallIntegerField(choices=ACCOUNT_TYPE_CHOICES, default=2)
+    gender = models.PositiveSmallIntegerField(choices=GENDER_TYPE_CHOICES, blank=True, null=True, default=2)
     description = models.TextField(null=True, blank=True)
-    education_status = models.PositiveSmallIntegerField(choices=EDUCATION_TYPE_CHOICE, null=False, blank=False)
+    education_status = models.PositiveSmallIntegerField(choices=EDUCATION_TYPE_CHOICE, null=False, blank=False, default=2)
 
     school_name = models.CharField(max_length=255, null=True, blank=True)
 
