@@ -24,9 +24,8 @@ class Account(AbstractUser):
     education_status = models.PositiveSmallIntegerField(choices=EDUCATION_TYPE_CHOICE, null=False, blank=False, default=2)
 
     school_name = models.CharField(max_length=255, null=True, blank=True)
-
-
-
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     class Meta:
         db_table = 'fitep_account'
