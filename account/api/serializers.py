@@ -7,7 +7,7 @@ from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from account.models import Account, Coach, Member
 from account.enums import AccountType
-
+from django.utils import timezone
 
 class ChoiceField(serializers.ChoiceField):
     
@@ -100,7 +100,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = Account
-        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'account_type', \
+        fields = ['password', 'first_name', 'last_name', 'email', 'account_type', \
             'identity_number', 'profile_photo', 'mobile_phone', 'birth_date', 'gender', 'description',\
                 'education_status', 'school_name']
 
@@ -123,7 +123,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         account = Account.objects.create(
-            username=validated_data['username'],
             first_name=validated_data['first_name'],
             email=validated_data['email'],
             last_name=validated_data['last_name'],
@@ -132,7 +131,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             profile_photo=validated_data.get('profile_photo'),
             birth_date=validated_data['birth_date'],
             mobile_phone=validated_data['mobile_phone'],
-            date_joined=datetime.datetime.now(),
+            date_joined=timezone.now(),
             gender=validated_data['gender'],
             description=validated_data['description'],
             education_status=validated_data['education_status'],
@@ -157,3 +156,4 @@ class ProfilePhotoUpdateSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.profile_photo = validated_data.get('profile_photo', instance.profile_photo)
         instance.save()
+    

@@ -23,6 +23,7 @@ class Account(AbstractUser):
     description = models.TextField(null=True, blank=True)
     education_status = models.PositiveSmallIntegerField(choices=EDUCATION_TYPE_CHOICE, null=False, blank=False, default=2)
 
+    username = models.CharField(max_length=150)    
     school_name = models.CharField(max_length=255, null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
