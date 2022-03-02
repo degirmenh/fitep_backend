@@ -100,21 +100,14 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = Account
-        fields = ['password', 'first_name', 'last_name', 'email', 'account_type', \
-            'identity_number', 'profile_photo', 'mobile_phone', 'birth_date', 'gender', 'description',\
-                'education_status', 'school_name']
+        fields = ['password', 'first_name', 'last_name', 'email', 'account_type']
 
     def validate(self, attr):
         validate_password(attr['password'])
         validate_email(attr['email'])
-    
-        
-
         return attr
     
     def validate_account_type(self, attr):
-        print(attr)
-        print([AccountType.MEMBER, AccountType.COACH])
         if attr in [AccountType.MEMBER, AccountType.COACH]:
             return attr
         else:
@@ -123,19 +116,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         account = Account.objects.create(
-            first_name=validated_data['first_name'],
-            email=validated_data['email'],
-            last_name=validated_data['last_name'],
-            account_type=validated_data['account_type'],
-            identity_number=validated_data['identity_number'],
-            profile_photo=validated_data.get('profile_photo'),
-            birth_date=validated_data['birth_date'],
-            mobile_phone=validated_data['mobile_phone'],
+            first_name=validated_data.get('first_name'),
+            email=validated_data.get('email'),
+            last_name=validated_data.get('last_name'),
+            account_type=validated_data.get('account_type'),
             date_joined=timezone.now(),
-            gender=validated_data['gender'],
-            description=validated_data['description'],
-            education_status=validated_data['education_status'],
-            school_name=validated_data['school_name']
         )
         account.set_password(validated_data['password'])
         account.save()
