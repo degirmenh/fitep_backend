@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/account/', include('account.api.urls')),
     path('api/course/', include('course.api.urls')),
     path('api/branch/', include('branch.api.urls')),
+    path('api/chat/', include('chat.api.urls')),
     path('api/package/', include('package.api.urls')),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
